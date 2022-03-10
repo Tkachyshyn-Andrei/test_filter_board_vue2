@@ -28,17 +28,17 @@
           </div>
         </b-col>
         <b-col>
-          <div>
-            <b-form-select v-model="selected" :options="options" class="mb-3">
-              <template #first>
-                <b-form-select-option :value="null" disabled>-- Please select an option --</b-form-select-option>
-              </template>
-            </b-form-select>
-          </div>
+<!--          <div>-->
+<!--            <b-form-select v-model="selected" :options="options" class="mb-3">-->
+<!--              <template #first>-->
+<!--                <b-form-select-option :value="null" disabled>&#45;&#45; Please select an option &#45;&#45;</b-form-select-option>-->
+<!--              </template>-->
+<!--            </b-form-select>-->
+<!--          </div>-->
         </b-col>
       </b-row>
       <b-row>
-        <b-col cols="3" v-for="item in computed_items" v-bind:key="item">
+        <b-col cols="3" v-for="item in computed_items" :key="item.id">
           <b-card>
             <b-card-text>
               {{ item.name }}
@@ -68,7 +68,6 @@ import makeCard from "@/data/generateData";
 export default {
   name: 'App',
   components: {},
-  el: '#v-for-object',
   data: () => ({
     items: makeCard(3),
     selectedStatus: '',
@@ -87,17 +86,17 @@ export default {
     ]
   }),
   computed: {
-    computed_items: function () {
+    computed_items() {
       let filterStatus = this.selectedStatus,
           filterCountry = this.selectedCountry
       return this.items.filter(function (item) {
         let filtered = true
         if (filterStatus && filterStatus.length > 0) {
-          filtered = item.status == filterStatus
+          filtered = item.status === filterStatus
         }
         if (filtered) {
           if (filterCountry && filterCountry.length > 0) {
-            filtered = item.country == filterCountry
+            filtered = item.country === filterCountry
           }
         }
         return filtered
