@@ -70,7 +70,7 @@ export default {
   components: {},
   el: '#v-for-object',
   data: () => ({
-    items: makeCard(4),
+    items: makeCard(3),
     selectedStatus: '',
     selectedCountry: '',
     optionsStatus: [
