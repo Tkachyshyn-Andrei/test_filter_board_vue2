@@ -71,13 +71,13 @@ export default {
   data: () => ({
     items: makeCard(3),
     selectedStatus: '',
-    selectedCountry: '',
     optionsStatus: [
       {value: null, text: 'Please select an option'},
       {value: '1', text: '1'},
       {value: '2', text: '2'},
       {value: '3', text: '3'}
     ],
+    selectedCountry: '',
     optionsCountry: [
       {value: null, text: 'Please select an option'},
       {value: 'ua', text: 'ua'},
@@ -92,7 +92,7 @@ export default {
       return this.items.filter(function (item) {
         let filtered = true
         if (filterStatus && filterStatus.length > 0) {
-          filtered = item.status === filterStatus
+          filtered = item.status === +filterStatus
         }
         if (filtered) {
           if (filterCountry && filterCountry.length > 0) {
