@@ -86,9 +86,6 @@ export default {
     computedItems() {
       return this.items
           .filter(item => {
-            return item.description.toLowerCase().includes(this.searchDescription.toLowerCase());
-          })
-          .filter(item => {
             let filtered = true
             if (this.selectedStatus && this.selectedStatus.length > 0) {
               filtered = item.status === +this.selectedStatus
@@ -101,6 +98,9 @@ export default {
               filtered = item.country === this.selectedCountry
             }
             return filtered
+          })
+          .filter(item => {
+            return item.description.toLowerCase().includes(this.searchDescription.toLowerCase());
           })
     },
   }
