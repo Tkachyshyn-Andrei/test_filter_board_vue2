@@ -29,12 +29,12 @@
         </b-col>
         <b-col>
           <div>
-            <b-form-input type="text" v-model="text" placeholder="Enter your text"></b-form-input>
+            <b-form-input type="text" v-model="searchDescription" placeholder="Enter your text"></b-form-input>
           </div>
         </b-col>
       </b-row>
       <b-row>
-        <b-col cols="3" v-for="item in computed_items" :key="item.id">
+        <b-col cols="3" v-for="item in computedItems" :key="item.id">
           <b-card>
             <b-card-text>
               {{ item.name }}
@@ -80,24 +80,28 @@ export default {
       {value: 'en', text: 'en'},
       {value: 'pl', text: 'pl'}
     ],
-    text: '',
+    searchDescription: '',
   }),
   computed: {
-    computed_items() {
-      let filterStatus = this.selectedStatus,
-          filterCountry = this.selectedCountry
-      return this.items.filter(function (item) {
-        let filtered = true
-        if (filterStatus && filterStatus.length > 0) {
-          filtered = item.status === +filterStatus
-        }
-        if (filtered) {
-          if (filterCountry && filterCountry.length > 0) {
-            filtered = item.country === filterCountry
-          }
-        }
-        return filtered
-      })
+    computedItems() {
+      return this.items
+          .filter(item => {
+            return item.description.toLowerCase().includes(this.searchDescription.toLowerCase());
+          })
+          .filter(item => {
+            let filtered = true
+            if (this.selectedStatus && this.selectedStatus.length > 0) {
+              filtered = item.status === +this.selectedStatus
+            }
+            return filtered
+          })
+          .filter(item => {
+            let filtered = true
+            if (this.selectedCountry && this.selectedCountry.length > 0) {
+              filtered = item.country === this.selectedCountry
+            }
+            return filtered
+          })
     },
   }
 }
