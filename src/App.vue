@@ -34,7 +34,7 @@
         </b-col>
       </b-row>
       <b-row>
-        <b-col cols="3" v-for="item in computedItems" :key="item.id">
+        <b-col cols="3" v-for="item in filterDescription" :key="item.id">
           <b-card>
             <b-card-text>
               {{ item.name }}
@@ -83,7 +83,7 @@ export default {
     searchDescription: '',
   }),
   computed: {
-    computedItems() {
+    filterStatus() {
       return this.items
           .filter(item => {
             let filtered = true
@@ -92,6 +92,9 @@ export default {
             }
             return filtered
           })
+    },
+    filterCountry() {
+      return this.filterStatus
           .filter(item => {
             let filtered = true
             if (this.selectedCountry && this.selectedCountry.length > 0) {
@@ -99,6 +102,9 @@ export default {
             }
             return filtered
           })
+    },
+    filterDescription() {
+      return this.filterCountry
           .filter(item => {
             return item.description.toLowerCase().includes(this.searchDescription.toLowerCase());
           })
