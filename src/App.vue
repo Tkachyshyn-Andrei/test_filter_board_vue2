@@ -66,7 +66,8 @@ export default {
       })
     },
     leave(user) {
-      this.$refs[`map-user-${user.id}`][0].map?.flyTo({
+       this.$refs[`map-user-${user.id}`][0].map?.flyTo({
+        center: [ +user.address.geo.lng, +user.address.geo.lat],
         zoom: 5,
         speed: 1,
         curve: 1,
