@@ -10,7 +10,7 @@
       </div>
       <b-row>
         <b-col cols="4" v-for="user in users" :key="user.id">
-          <b-card class="mb-3">
+          <b-card class="mb-3" @mouseenter="move(user)" @mouseleave="leave(user)">
             <b-card-text>
               Name: {{ user.name }}
             </b-card-text>
@@ -18,12 +18,13 @@
               Email: {{ user.email }}
             </b-card-text>
             <b-card-text>
-              <MglMap container="map-wrapper" class="mapStyle"
+              <MglMap :ref="`map-user-${user.id}`" container="map-wrapper" class="mapStyle"
                       :accessToken="accessToken"
                       :mapStyle="mapStyle"
-                      :zoom="5"
+                      :zoom="zoom"
                       :center="[ +user.address.geo.lng, +user.address.geo.lat]">
-                <MglMarker :coordinates="[ +user.address.geo.lng, +user.address.geo.lat]" color="blue"/>
+                <MglMarker :coordinates="[ +user.address.geo.lng, +user.address.geo.lat]"
+                           color="blue"/>
               </MglMap>
             </b-card-text>
           </b-card>
@@ -49,12 +50,29 @@ export default {
     users: [],
     accessToken: 'pk.eyJ1Ijoia2lyaWxvIiwiYSI6ImNsMHM2NWhiNDAzemkzZG81ZjJ2YmFydDkifQ.x3fhucH9KpKg4amuJxCFwA',
     mapStyle: 'mapbox://styles/mapbox/streets-v11',
+    zoom: 5
   }),
   mounted() {
     axios
         .get('https://jsonplaceholder.typicode.com/users')
         .then(response => (this.users = response.data));
   },
+  methods: {
+    move(user) {
+      this.$refs[`map-user-${user.id}`][0].map?.flyTo({
+        zoom: 1,
+        speed: 1,
+        curve: 1,
+      })
+    },
+    leave(user) {
+      this.$refs[`map-user-${user.id}`][0].map?.flyTo({
+        zoom: 5,
+        speed: 1,
+        curve: 1,
+      })
+    }
+  }
 }
 </script>
 
