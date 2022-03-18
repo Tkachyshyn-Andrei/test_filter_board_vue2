@@ -80,7 +80,7 @@ export default {
         speed: 1,
         curve: 1,
       })
-      this.activeUser = null
+      this.activeUser = user
     }
   }
 }
