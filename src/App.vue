@@ -38,8 +38,8 @@
                     :mapStyle="mapStyle"
                     :zoom="1">
               <MglMarker
-                  v-for="user in users" :key="user.id"
-                  :coordinates="[ +user.address.geo.lng, +user.address.geo.lat]"
+                  v-if="activeUser"
+                  :coordinates="[ +activeUser.address.geo.lng, +activeUser.address.geo.lat]"
                   color="blue"/>
             </MglMap>
           </b-col>
@@ -66,7 +66,7 @@ export default {
     accessToken: 'pk.eyJ1Ijoia2lyaWxvIiwiYSI6ImNsMHM2NWhiNDAzemkzZG81ZjJ2YmFydDkifQ.x3fhucH9KpKg4amuJxCFwA',
     mapStyle: 'mapbox://styles/mapbox/streets-v11',
     zoom: 5,
-    coordinates:[]
+    activeUser: null,
   }),
   mounted() {
     axios
@@ -80,6 +80,7 @@ export default {
         speed: 1,
         curve: 1,
       })
+      this.activeUser = user
     },
     leave(user) {
        this.$refs[`map-user-${user.id}`][0].map?.flyTo({
@@ -88,6 +89,7 @@ export default {
         speed: 1,
         curve: 1,
       })
+      this.activeUser = null
     }
   }
 }
