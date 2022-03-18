@@ -1,13 +1,6 @@
 <template>
   <b-container fluid>
     <div id="app">
-      <div>
-        <b-navbar variant="faded" type="light">
-          <b-navbar-brand href="#">
-            <img src="https://placekitten.com/g/30/30" alt="Kitten">
-          </b-navbar-brand>
-        </b-navbar>
-      </div>
       <b-row>
         <b-col cols="4">
           <b-col v-for="user in users" :key="user.id">
@@ -31,18 +24,16 @@
             </b-card>
           </b-col>
         </b-col>
-        <b-col cols="8" class="main-map-fixed">
-          <b-col>
-            <MglMap container="map-wrapper" class="mapStyle main-map"
-                    :accessToken="accessToken"
-                    :mapStyle="mapStyle"
-                    :zoom="1">
-              <MglMarker
-                  v-if="activeUser"
-                  :coordinates="[ +activeUser.address.geo.lng, +activeUser.address.geo.lat]"
-                  color="blue"/>
-            </MglMap>
-          </b-col>
+        <b-col cols="8">
+          <MglMap container="map-wrapper" class="mapStyle main-map"
+                  :accessToken="accessToken"
+                  :mapStyle="mapStyle"
+                  :zoom="1">
+            <MglMarker
+                v-if="activeUser"
+                :coordinates="[ +activeUser.address.geo.lng, +activeUser.address.geo.lat]"
+                color="blue"/>
+          </MglMap>
         </b-col>
       </b-row>
     </div>
@@ -96,6 +87,11 @@ export default {
 </script>
 
 <style>
+.container-fluid {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
 .users-map {
   max-width: 100%;
   height: 300px;
@@ -103,6 +99,8 @@ export default {
 }
 
 .main-map {
+  position: sticky;
+  top: 0;
   max-width: 100%;
   height: 90vh;
   width: 100%;
